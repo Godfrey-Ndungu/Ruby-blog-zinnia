@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  author: one
+  slug: MyString
+  title: MyString
+  category: one
+  state: MyString
+  active_till: 2024-07-17 14:40:38
+
+two:
+  author: two
+  slug: MyString
+  title: MyString
+  category: two
+  state: MyString
+  active_till: 2024-07-17 14:40:38
