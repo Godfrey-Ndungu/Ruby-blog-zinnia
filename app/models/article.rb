@@ -5,7 +5,8 @@ class Article < ApplicationRecord
   has_many :article_bodies
   has_many :editors, through: :article_bodies, source: :author
   has_many :comments, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  has_many :article_likes, dependent: :destroy
+  has_many :liked_by_users, through: :article_likes, source: :user
 
   validates :slug, presence: true, uniqueness: true
   validates :title, presence: true

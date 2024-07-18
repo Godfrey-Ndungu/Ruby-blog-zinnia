@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_18_210857) do
+ActiveRecord::Schema.define(version: 2024_07_18_220809) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2024_07_18_210857) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_article_likes_on_article_id"
+    t.index ["user_id", "article_id"], name: "index_article_likes_on_user_id_and_article_id", unique: true
     t.index ["user_id"], name: "index_article_likes_on_user_id"
   end
 

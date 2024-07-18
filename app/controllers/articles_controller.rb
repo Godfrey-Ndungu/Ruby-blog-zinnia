@@ -6,6 +6,28 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(slug: params[:slug])
+    @comment = @article.comments.build
+    @article_liked = user_signed_in? && current_user.liked_articles.exists?(@article.id)
+  end
+
+  def like
+    @article = Article.find_by(slug: params[:slug])
+    if @article
+      current_user.liked_articles.create(article: @article)
+      redirect_to @article, notice: 'Article liked!'
+    else
+      redirect_to root_path, alert: 'Article not found.'
+    end
+  end
+
+  def unlike
+    @article = Article.find_by(slug: params[:slug])
+    if @article
+      current_user.liked_articles.where(article: @article).destroy_all
+      redirect_to @article, notice: 'Article unliked!'
+    else
+      redirect_to root_path, alert: 'Article not found.'
+    end
   end
 
   def update
@@ -28,6 +50,7 @@ class ArticlesController < ApplicationController
     unless @article
       redirect_to articles_path, alert: 'Article not found.'
     end
+
   end
 
   def article_params

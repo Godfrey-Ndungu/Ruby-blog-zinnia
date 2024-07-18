@@ -5,24 +5,31 @@
 <p>Category: <%= @article.category.name %></p>
 <p>Published: <%= time_ago_in_words(@article.created_at) %> ago</p>
 <h1><%= @article.title %></h1>
-
-<
 <p>Author: <%= @article.author.full_name %></p>
 
-<!-- Include the comment form partial -->
-<%= render 'comments/form', article: @article %>
+
+<% if user_signed_in? %>
+  <% if current_user.liked_articles.exists?(@article.id) %>
+    <%= button_to 'Unlike', article_unlike_article_path(@article.slug), method: :delete, class: 'btn btn-secondary' %>
+  <% else %>
+    <%= button_to 'Like', article_like_article_path(@article.slug), method: :post, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
 
 <!-- Display existing comments -->
 <h3>Comments:</h3>
 <% @article.comments.each do |comment| %>
   <div class="comment">
+    <% if comment.user %>
     <p><strong><%= comment.user.email %></strong>: <%= comment.body %></p>
-    <% if comment.user == current_user %>
-        <%= link_to 'Edit', edit_article_comment_path(@article.slug, comment) %> |
-        <%= link_to 'Delete', article_comment_path(@article.slug, comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-        
+        <% if comment.user == current_user %>
+            <%= link_to 'Edit', edit_article_comment_path(@article.slug, comment) %> |
+            <%= link_to 'Delete', article_comment_path(@article.slug, comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+            
 
+        <% end %>
     <% end %>
 
   </div>
 <% end %>
+<%= render 'comments/form', article: @article %>
