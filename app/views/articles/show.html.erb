@@ -1,0 +1,6 @@
+<!-- app/views/articles/show.html.erb -->
+<h1><%= @article.title %></h1>
+<p><%= @article.article_bodies.last.body %></p>
+<p><%= @article.author.full_name %></p>
+<p>Category: <%= @article.category.name %></p>
+<p>Published: <%= time_ago_in_words(@article.created_at) %> ago</p>
