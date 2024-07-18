@@ -8,4 +8,7 @@ class User < ApplicationRecord
 
   has_many :articles, foreign_key: 'author_id'
   has_many :article_bodies, through: :articles
+  has_many :comments, dependent: :destroy
+  has_many :article_likes, dependent: :destroy
+  has_many :liked_articles, through: :article_likes, source: :article
 end
