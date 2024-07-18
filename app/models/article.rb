@@ -4,6 +4,8 @@ class Article < ApplicationRecord
   has_and_belongs_to_many :tags
   has_many :article_bodies
   has_many :editors, through: :article_bodies, source: :author
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   validates :slug, presence: true, uniqueness: true
   validates :title, presence: true

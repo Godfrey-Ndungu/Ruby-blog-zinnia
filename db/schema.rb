@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_18_124643) do
+ActiveRecord::Schema.define(version: 2024_07_18_210857) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -52,12 +52,19 @@ ActiveRecord::Schema.define(version: 2024_07_18_124643) do
 
   create_table "article_bodies", force: :cascade do |t|
     t.integer "article_id", null: false
-    t.integer "author_id", null: false
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["article_id"], name: "index_article_bodies_on_article_id"
-    t.index ["author_id"], name: "index_article_bodies_on_author_id"
+  end
+
+  create_table "article_likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_article_likes_on_article_id"
+    t.index ["user_id"], name: "index_article_likes_on_user_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -92,6 +99,25 @@ ActiveRecord::Schema.define(version: 2024_07_18_124643) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "article_id", null: false
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_comments_on_article_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_likes_on_article_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -135,8 +161,13 @@ ActiveRecord::Schema.define(version: 2024_07_18_124643) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "article_bodies", "articles"
-  add_foreign_key "article_bodies", "authors"
+  add_foreign_key "article_likes", "articles"
+  add_foreign_key "article_likes", "users"
   add_foreign_key "articles", "authors"
   add_foreign_key "articles", "categories"
   add_foreign_key "authors", "users"
+  add_foreign_key "comments", "articles"
+  add_foreign_key "comments", "users"
+  add_foreign_key "likes", "articles"
+  add_foreign_key "likes", "users"
 end

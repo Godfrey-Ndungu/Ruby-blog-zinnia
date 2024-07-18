@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <%= form_with(model: [ @article, Comment.new ], local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :body, "Add a comment:" %>
+      <%= form.text_area :body, class: "form-control", rows: 3 %>
+    </div>
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <p>You need to <a href="<%= new_user_session_path %>">sign in</a> to add a comment.</p>
+<% end %>
