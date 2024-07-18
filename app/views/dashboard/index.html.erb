@@ -1,2 +1,5 @@
 <h1>Welcome to your dashboard, <%= current_user.email %>!</h1>
 <p>This page is only accessible to logged-in users.</p>
+<%= link_to 'Authors', authors_path %>
+<li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
