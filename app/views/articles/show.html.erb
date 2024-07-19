@@ -30,9 +30,12 @@
     <%# <% end %> %>
     <p class="text-xs text-gray-500">Author: <%= @article.author.full_name %></p>
   </div>
-  <p class="text-lg mb-4"><%= @article.article_bodies.last.body %></p>
-  <p class="text-sm text-gray-600">Category: <%= @article.category.name %></p>
-  <p class="text-sm text-gray-600">Published: <%= time_ago_in_words(@article.created_at) %> ago</p>
+  <div class="container mx-auto items-center mb-4 pr-10">
+
+    <p class="text-lg mb-4"><%= @article.body %></p>
+    <p class="text-sm text-gray-600">Category: <%= @article.category.name %></p>
+    <p class="text-sm text-gray-600">Published: <%= time_ago_in_words(@article.created_at) %> ago</p>
+  </div>
 
   <!-- Like Button -->
   <% if user_signed_in? %>
