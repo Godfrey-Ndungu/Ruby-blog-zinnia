@@ -1,35 +1,64 @@
 
-<section>
-  <div>
-    <h2>Our Blog</h2>
-    <div>
-      <% @articles.each do |article| %>
-        <div>
-          <div>
-            <div>
-              <span>
-                <!-- Replace with actual category name -->
-                <%= article.category.name %>
-              </span>
-              <span><%= time_ago_in_words(article.created_at) %> ago</span>
-            </div>
-            <h4><%= article.title %></h4>
-            <% if article.article_bodies.last %>
-            
-              <p><%= truncate(article.article_bodies.last.body, length: 90) %></p>
-            <% else %>
-              <p>No article body found.</p>
-            <% end %>
-            <div>
-              <!-- Replace with actual author details -->
-              <span><%= article.author.full_name %></span>
-            </div>
-            <a href="<%= article_path(article.slug) %>">
-              Read more
-            </a>
-          </div>
-        </div>
-      <% end %>
+<section class="relative w-full h-[40vh] bg-gray-900 text-white pb-10">
+  <!-- Background Image -->
+  <div class="absolute inset-0 overflow-hidden">
+    <img src="https://t3.ftcdn.net/jpg/08/57/33/12/240_F_857331248_MohPjDJDgg9Ki1OgEagbVel1Drc4kR6n.jpg" alt="Hero Image" class="w-full h-full object-cover opacity-30" />
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 py-32">
+    <h1 class="text-5xl md:text-6xl font-bold leading-tight text-center mb-4">
+      Zinnia Blog
+    </h1>
+    <p class="text-lg md:text-2xl text-center mb-8">
+      Discover the latest trends, stories, and insights from our experts.
+    </p>
+    <a href="#blog" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      Read More
+    </a>
+  </div>
+</section>
+
+
+<!-- Lifestyle Section -->
+<section class="container mx-auto bg-gray-100 pt-10">
+  <div class="max-w-screen-lg ">
+    <div class="border-b-8 border-gray-300 pb-4">
+      <h1 class="text-4xl font-bold text-gray-900">
+        Lifestyle
+      </h1>
     </div>
+  </div>
+</section>
+
+<!-- Articles Section -->
+<section class="container mx-auto px-4 py-8 pt-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <% @articles.each do |article| %>
+      <div class="bg-white shadow-md rounded-lg overflow-hidden flex flex-col h-full">
+        <!-- Header Image -->
+        <img src="https://media.istockphoto.com/id/1252684502/photo/professional-blogger-working-on-his-new-post-for-social-media-at-home-closeup-creative.jpg?s=612x612&w=0&k=20&c=VR7V3Hn1HKjMQdykk2zjQ-2Xjsiw3tewZFZMp6swpog=" alt="<%= article.title %>" class="w-full h-48 object-cover">
+        <div class="p-4 flex-grow flex flex-col">
+          <h4 class="text-xl font-semibold mb-2"><%= article.title %></h4>
+          <% if article.article_bodies.last %>
+            <p class="text-gray-700 mb-4 flex-grow"><%= truncate(article.article_bodies.last.body, length: 90) %></p>
+          <% else %>
+            <p class="text-gray-700 mb-4 flex-grow">No article body found.</p>
+          <% end %>
+          <a href="<%= article_path(article.slug) %>" class="text-blue-500 hover:underline mt-auto">Read more</a>
+        </div>
+        <!-- Card Footer -->
+        <div class="flex items-center justify-between p-4 border-t border-gray-200">
+          <div class="flex items-center">
+            <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp" class="w-10 h-10 rounded-full mr-4">
+            <div class="text-sm">
+              <span class="text-gray-900 font-bold"><%= article.author.full_name %></span>
+              <div class="text-gray-600">Author</div>
+            </div>
+          </div>
+          <span class="text-sm text-gray-600"><%= article.category.name %></span>
+        </div>
+      </div>
+    <% end %>
   </div>
 </section>

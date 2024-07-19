@@ -1,16 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Maya</title>
+    <title>blogZinnia</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-gray-100 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-red-500 text-white shadow-lg sticky top-0 z-1000 w-full">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-lg font-semibold">
+          <a href="/" class="text-white">Logo</a>
+        </div>
+        <div>
+          <a href="/" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Home</a>
+          <% if user_signed_in? %>
+            <% if current_user.confirmed? %>
+              <a href="/dashboard" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Dashboard</a>
+            <% else %>
+              <span class="text-white px-3 py-2 rounded-md">Please confirm your account</span>
+            <% end %>
+          <% else %>
+            <a href="/users/sign_in" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Login</a>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="">
+
+      <%= yield %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-purple-500 text-white py-4 mt-10">
+      <div class="container mx-auto px-4 flex justify-between">
+        <p>&copy; <%= Time.now.year %> BlogZinnia. All rights reserved.</p>
+        <div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

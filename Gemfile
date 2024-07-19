@@ -59,3 +59,5 @@ gem 'simplecov', require: false, group: :test
 gem "devise", "~> 4.9"
 gem 'rolify'
 gem 'trestle'
+
+gem "tailwindcss-rails", "~> 2.5"
