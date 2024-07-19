@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_19_054623) do
+ActiveRecord::Schema.define(version: 2024_07_19_073600) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -50,14 +50,6 @@ ActiveRecord::Schema.define(version: 2024_07_19_054623) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "article_bodies", force: :cascade do |t|
-    t.integer "article_id", null: false
-    t.text "body"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["article_id"], name: "index_article_bodies_on_article_id"
-  end
-
   create_table "article_likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "article_id", null: false
@@ -77,6 +69,7 @@ ActiveRecord::Schema.define(version: 2024_07_19_054623) do
     t.datetime "active_till"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "body"
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["category_id"], name: "index_articles_on_category_id"
   end
@@ -167,7 +160,6 @@ ActiveRecord::Schema.define(version: 2024_07_19_054623) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "article_bodies", "articles"
   add_foreign_key "article_likes", "articles"
   add_foreign_key "article_likes", "users"
   add_foreign_key "articles", "authors"
