@@ -9,6 +9,7 @@
   <thead class="bg-gray-100 text-gray-600 text-sm uppercase font-semibold">
     <tr>
       <th class="py-3 px-4 text-left">ID</th>
+      <th class="py-3 px-4 text-left">Profile Picture</th> <!-- New Column for Profile Picture -->
       <th class="py-3 px-4 text-left">Full Name</th>
       <th class="py-3 px-4 text-left">Email</th>
       <th class="py-3 px-4 text-left">Active</th>
@@ -19,6 +20,15 @@
     <% @authors.each do |author| %>
       <tr class="border-b border-gray-200 hover:bg-gray-100">
         <td class="py-3 px-4"><%= author.id %></td>
+        <td class="py-3 px-4">
+          <% if author.profile_picture.attached? %>
+            <%= image_tag(author.profile_picture, alt: "#{author.full_name}'s Profile Picture", class: 'w-12 h-12 rounded-full object-cover') %>
+          <% else %>
+            <div class="w-12 h-12 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full">
+              <span class="text-xl font-semibold">ZB</span>
+            </div>
+          <% end %>
+        </td>
         <td class="py-3 px-4"><%= author.full_name %></td>
         <td class="py-3 px-4"><%= author.user.email %></td>
         <td class="py-3 px-4"><%= author.is_active ? 'Yes' : 'No' %></td>
