@@ -39,7 +39,7 @@
   </div>
 
   <!-- Like Button -->
-  <span class="ml-4 text-sm text-gray-600"><%= @article.likes_count %> Likes</span
+  <span class="ml-4 text-sm text-gray-600"><b><%= @article.likes_count %></b> Likes</span
   </div>
   <% if user_signed_in? %>
     <% if current_user.liked_articles.exists?(@article.id) %>
@@ -51,33 +51,79 @@
 
   <!-- Display existing comments -->
   <h3 class="text-2xl font-semibold mt-8 mb-4">Comments:</h3>
-  <% @article.comments.each do |comment| %>
-    <div class="bg-gray-100 p-4 rounded-lg mb-4">
-      <% if comment.user %>
-        <div class="flex items-start mb-2">
-          <% if comment.user.profile_picture.attached? %>
-            <img src="<%= rails_blob_url(comment.user.profile_picture, only_path: true) %>" alt="Profile Picture" class="w-10 h-10 rounded-full mr-3">
-          <% else %>
-            <% initials = comment.user.email.split('@').first.split.map { |name| name[0] }.join.upcase %>
-            <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3 text-white font-bold text-lg">
-              <%= initials %>
-            </div>
-          <% end %>
-          <div>
-            <p class="font-semibold text-gray-900"><%= comment.user.email %></p>
-            <p><%= comment.body %></p>
-            <% if comment.user == current_user %>
-              <div class="mt-2">
-                <%= link_to 'Edit', edit_article_comment_path(@article.slug, comment), class: 'text-blue-500 hover:underline' %> |
-                <%= link_to 'Delete', article_comment_path(@article.slug, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
-              </div>
-            <% end %>
-          </div>
+<% @article.comments.each do |comment| %>
+  <div class="bg-gray-100 p-4 rounded-lg mb-4">
+    <% if comment.user %>
+      <% author = comment.user.author %>
+      <% if author && author.profile_picture.attached? %>
+        <img src="<%= rails_blob_url(author.profile_picture, only_path: true) %>" alt="Profile Picture" class="w-10 h-10 rounded-full mr-3">
+      <% else %>
+        <% initials = comment.user.email.split('@').first.split.map { |name| name[0] }.join.upcase %>
+        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3 text-white font-bold text-lg">
+          <%= initials %>
         </div>
       <% end %>
-    </div>
-  <% end %>
+      <div>
+        <p class="font-semibold text-gray-900"><%= comment.user.email %></p>
+        <p><%= comment.body %></p>
+        <% if comment.user == current_user %>
+          <div class="mt-2">
+            <button onclick="toggleEditForm('<%= dom_id(comment) %>')" class="text-blue-500 hover:underline">Edit</button> |
+            <%= link_to 'Delete', article_comment_path(@article.slug, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:underline' %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Edit Form -->
+  <div id="<%= dom_id(comment) %>" class="hidden mb-4 p-4 bg-white rounded-lg shadow-md">
+    <%= form_with(model: [@article, comment], local: true, html: { id: "edit_form_#{comment.id}" }) do |form| %>
+      <div class="mb-4">
+        <%= form.label :body, "Edit your comment:", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_area :body, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm", rows: 3 %>
+      </div>
+      <%= form.submit "Update Comment", class: "inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+    <% end %>
+  </div>
+
+<% end %>
+
 
   <!-- Comment Form -->
   <%= render 'comments/form', article: @article %>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[data-method="delete"]').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Delete link clicked');
+        // Manually send a delete request
+        fetch(element.href, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            window.location.reload(); // Refresh to reflect changes
+          }
+        });
+      });
+    });
+  });
+  
+document.addEventListener("DOMContentLoaded", () => {
+  window.toggleEditForm = (commentId) => {
+    const form = document.getElementById(commentId);
+    if (form) {
+      form.classList.toggle('hidden');
+    } else {
+      console.error(`Element with ID ${commentId} not found.`);
+    }
+  };
+});
+
+</script>
