@@ -1,11 +1,11 @@
 <h1>Edit Comment</h1>
 
-<%= form_with(model: @comment, local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :body %>
-    <%= form.text_area :body, class: "form-control", rows: 3 %>
+<%= form_with(model: [@article, @comment], local: true) do |form| %>
+  <div class="mb-4">
+    <%= form.label :body, class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.text_area :body, class: "form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50", rows: 3 %>
   </div>
-  <%= form.submit "Update Comment", class: "btn btn-primary" %>
+  <%= form.submit "Update Comment", class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
 <% end %>
 
-<%= link_to 'Back', @comment.article %>
+<%= link_to 'Back', article_path(@comment.article), class: "text-blue-500 hover:underline" %>

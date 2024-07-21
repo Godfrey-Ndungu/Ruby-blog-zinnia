@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   before_action :check_comment_owner, only: [:edit, :update, :destroy]
 
   def create
-    @article = Article.find(params[:article_id])
+    @article = Article.find(params[:article_slug])
+
     @comment = @article.comments.new(comment_params)
     @comment.user = current_user
 
@@ -16,12 +17,20 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    @article = Article.find_by!(slug: params[:article_slug])
+    @comment = @article.comments.find(params[:id])
     redirect_to article_path(@article.slug), alert: 'Not authorized' unless @comment.user == current_user
   end
 
   def update
     if @comment.update(comment_params)
-      redirect_to article_path(@article.slug), notice: 'Comment was successfully updated.'
+      @article = Article.find_by(id: @comment.article_id)
+      if @article
+        redirect_to article_path(@article.slug), notice: 'Comment was successfully updated.'
+      else
+        Rails.logger.error "Article not found with ID: #{@comment.article_id}"
+        redirect_to root_path, alert: 'Article not found.'
+      end
     else
       render :edit
     end

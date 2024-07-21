@@ -15,24 +15,3 @@ ActiveStorage.start()
 require("trix")
 require("@rails/actiontext")
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a[data-method="delete"]').forEach((element) => {
-      element.addEventListener('click', (event) => {
-        event.preventDefault();
-        console.log('Delete link clicked');
-        // Manually send a delete request
-        fetch(element.href, {
-          method: 'DELETE',
-          headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-          }
-        })
-        .then(response => {
-          if (response.ok) {
-            window.location.reload(); // Refresh to reflect changes
-          }
-        });
-      });
-    });
-  });
-  
