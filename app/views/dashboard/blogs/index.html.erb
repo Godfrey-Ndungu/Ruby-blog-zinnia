@@ -1,13 +1,15 @@
 <div class="p-6 bg-white shadow-md rounded-lg">
-  <h1 class="text-2xl font-bold mb-4">Blogs</h1>
-
-  <%= link_to 'New Blog', new_dashboard_blog_path, class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block' %>
-
+  <h1 class="text-2xl font-bold mb-4">Articles</h1>
+<div class="text-2xl font-bold mb-4 flex justify-end items-end ">
+  <%= link_to 'Add article', new_dashboard_blog_path, class: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block' %>
+</div>
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-800 text-white">
       <tr>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Category</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Author</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Header Image</th>
         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
       </tr>
     </thead>
@@ -16,10 +18,17 @@
         <tr>
           <td class="px-6 py-4 whitespace-nowrap"><%= blog.title %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= blog.category.name if blog.category %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= blog.author.full_name if blog.author %></td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <% if blog.header_image.attached? %>
+              <%= image_tag(blog.header_image, alt: "Header Image", class: "w-24 h-16 object-cover") %>
+            <% else %>
+              NA
+            <% end %>
+          </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <%= link_to 'Edit', edit_dashboard_blog_path(blog), class: 'text-blue-500 hover:text-blue-700' %>
             <%= link_to 'Delete', dashboard_blog_path(blog), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-500 hover:text-red-700 ml-4' %>
-
           </td>
         </tr>
       <% end %>
