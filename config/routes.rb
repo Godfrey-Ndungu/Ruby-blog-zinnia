@@ -6,9 +6,7 @@ Rails.application.routes.draw do
 
   get '/', to: 'articles#index', as: 'root'
   get 'articles/:slug', to: 'articles#show', as: 'article'
-  scope '/dashboard' do
-    get 'index', to: 'dashboard#index'
-  end
+  get 'dashboard/index', to: 'dashboard#index', as: 'dashboard'
 
   namespace :dashboard do
     resources :blogs, only: [:index, :new, :create, :edit, :update, :destroy]
