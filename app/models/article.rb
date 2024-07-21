@@ -9,7 +9,6 @@ class Article < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :article_likes, dependent: :destroy
   has_many :liked_by_users, through: :article_likes, source: :user
-  has_many :likes
 
   validates :slug, presence: true, uniqueness: true
   validates :title, presence: true
@@ -18,7 +17,7 @@ class Article < ApplicationRecord
   before_validation :ensure_unique_slug
 
   def likes_count
-    likes.count
+    article_likes.count
   end
 
   private
