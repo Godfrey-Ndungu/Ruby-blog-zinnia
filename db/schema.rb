@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_21_170549) do
+ActiveRecord::Schema.define(version: 2024_07_21_183825) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2024_07_21_170549) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "body"
     t.string "header_image"
+    t.integer "likes_count"
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["category_id"], name: "index_articles_on_category_id"
   end

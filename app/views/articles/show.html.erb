@@ -1,8 +1,11 @@
-<!-- app/views/articles/show.html.erb -->
 <section class="relative w-full h-[40vh] bg-gray-900 text-white">
   <!-- Background Image -->
   <div class="absolute inset-0 overflow-hidden">
-    <img src="https://t3.ftcdn.net/jpg/08/57/33/12/240_F_857331248_MohPjDJDgg9Ki1OgEagbVel1Drc4kR6n.jpg" alt="Hero Image" class="w-full h-full object-cover opacity-30" />
+    <% if @article.header_image.attached? %>
+      <img src="<%= rails_blob_url(@article.header_image, only_path: true) %>" alt="<%= @article.title %>" class="w-full h-full object-cover opacity-30" />
+    <% else %>
+      <img src="https://t3.ftcdn.net/jpg/08/57/33/12/240_F_857331248_MohPjDJDgg9Ki1OgEagbVel1Drc4kR6n.jpg" alt="Hero Image" class="w-full h-full object-cover opacity-30" />
+    <% end %>
   </div>
 
   <!-- Content -->
@@ -13,31 +16,31 @@
     <h1 class="text-5xl md:text-6xl font-bold leading-tight text-center mb-4 underline">
       <%= @article.title %>
     </h1>
-    <div class="flex items-center mb-4">
-      <%# <% if @article.author.profile_picture %> %>
-        <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp" alt="Author" class="w-8 h-8 rounded-full mr-2">
-      <%# <% end %> %>
-      <p class="text-xs text-gray-300">By <%= @article.author.full_name %></p>
-    </div>
   </div>
 </section>
 
 <section class="container mx-auto px-4 py-8">
   <h1 class="text-3xl font-bold text-center mb-6 underline"><%= @article.title %></h1>
   <div class="flex items-center mb-4">
-    <%# <% if @article.author.profile_picture %> %>
-      <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp" alt="Author" class="w-12 h-12 rounded-full mr-2">
-    <%# <% end %> %>
+    <% if @article.author.profile_picture.attached? %>
+      <img src="<%= rails_blob_url(@article.author.profile_picture, only_path: true) %>" alt="Author" class="w-12 h-12 rounded-full mr-2">
+    <% else %>
+      <% initials = @article.author.full_name.split.map { |name| name[0] }.join.upcase %>
+      <div class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center mr-2 text-white font-bold text-lg">
+        <%= initials %>
+      </div>
+    <% end %>
     <p class="text-xs text-gray-500">Author: <%= @article.author.full_name %></p>
   </div>
   <div class="container mx-auto items-center mb-4 pr-10">
-
     <p class="text-lg mb-4"><%= @article.body %></p>
     <p class="text-sm text-gray-600">Category: <%= @article.category.name %></p>
     <p class="text-sm text-gray-600">Published: <%= time_ago_in_words(@article.created_at) %> ago</p>
   </div>
 
   <!-- Like Button -->
+  <span class="ml-4 text-sm text-gray-600"><%= @article.likes_count %> Likes</span
+  </div>
   <% if user_signed_in? %>
     <% if current_user.liked_articles.exists?(@article.id) %>
       <%= button_to 'Unlike', article_unlike_article_path(@article.slug), method: :delete, class: 'bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg mt-4' %>
@@ -52,9 +55,14 @@
     <div class="bg-gray-100 p-4 rounded-lg mb-4">
       <% if comment.user %>
         <div class="flex items-start mb-2">
-          <%# <% if comment.user.profile_picture %> %>
-            <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp" alt="Profile Picture" class="w-10 h-10 rounded-full mr-3">
-          <%# <% end %> %>
+          <% if comment.user.profile_picture.attached? %>
+            <img src="<%= rails_blob_url(comment.user.profile_picture, only_path: true) %>" alt="Profile Picture" class="w-10 h-10 rounded-full mr-3">
+          <% else %>
+            <% initials = comment.user.email.split('@').first.split.map { |name| name[0] }.join.upcase %>
+            <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3 text-white font-bold text-lg">
+              <%= initials %>
+            </div>
+          <% end %>
           <div>
             <p class="font-semibold text-gray-900"><%= comment.user.email %></p>
             <p><%= comment.body %></p>
