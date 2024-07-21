@@ -1,0 +1,21 @@
+<%= form_with(model: @category, url: @category.persisted? ? dashboard_category_path(@category) : dashboard_categories_path, method: @category.persisted? ? :patch : :post, local: true, html: { class: 'space-y-6' }) do |form| %>
+  <% if @category.errors.any? %>
+    <div id="error_explanation" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+      <h2 class="text-lg font-bold"><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <ul class="mt-2 list-disc list-inside">
+        <% @category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, class: 'block text-gray-700 font-medium mb-2' %>
+    <%= form.text_field :name, class: 'form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit @category.new_record? ? 'Create Category' : 'Update Category', class: 'inline-block px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md' %>
+  </div>
+<% end %>

@@ -13,6 +13,9 @@ class Article < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :title, presence: true
 
+  before_validation :generate_slug, on: :create
+  before_validation :ensure_unique_slug
+
   private
   def generate_slug
     self.slug = "#{title.parameterize}" if title
