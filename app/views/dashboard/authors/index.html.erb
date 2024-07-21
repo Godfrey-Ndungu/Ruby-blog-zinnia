@@ -1,0 +1,31 @@
+<h1 class="text-2xl font-bold mb-4 flex items-center">
+  Authors
+</h1>
+<div class="text-2xl font-bold mb-4 flex justify-end items-end ">
+  <%= link_to 'Add Author', new_dashboard_author_path, class: 'inline-block py-2 px-4 mr-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md' %>
+</div>
+
+<table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+  <thead class="bg-gray-100 text-gray-600 text-sm uppercase font-semibold">
+    <tr>
+      <th class="py-3 px-4 text-left">ID</th>
+      <th class="py-3 px-4 text-left">Full Name</th>
+      <th class="py-3 px-4 text-left">Email</th>
+      <th class="py-3 px-4 text-left">Active</th>
+      <th class="py-3 px-4 text-left">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="text-gray-700 text-sm">
+    <% @authors.each do |author| %>
+      <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-4"><%= author.id %></td>
+        <td class="py-3 px-4"><%= author.full_name %></td>
+        <td class="py-3 px-4"><%= author.user.email %></td>
+        <td class="py-3 px-4"><%= author.is_active ? 'Yes' : 'No' %></td>
+        <td class="py-3 px-4">
+          <%= link_to 'Edit Author', edit_dashboard_author_path(author), class: 'inline-block py-2 px-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

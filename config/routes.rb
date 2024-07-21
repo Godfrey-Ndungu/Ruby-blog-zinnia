@@ -11,9 +11,9 @@ Rails.application.routes.draw do
 
   namespace :dashboard do
     resources :blogs, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :authors, only: [:index, :new, :create, :edit, :update]
   end
 
-  resources :authors, only: [:index, :new, :create, :edit, :update]
   resources :categories, only: [:index, :new, :create, :edit, :update]
 
   resources :articles, param: :slug do
