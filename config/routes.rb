@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   }
   get '/', to: 'articles#index', as: 'root'
   get 'articles/:slug', to: 'articles#show', as: 'article'
-  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  scope '/dashboard' do
+    get 'index', to: 'dashboard#index'
+  end
+
+  namespace :dashboard do
+    resources :blogs, only: [:index, :new, :create, :edit, :update, :destroy]
+  end
+
   resources :authors, only: [:index, :new, :create, :edit, :update]
   resources :categories, only: [:index, :new, :create, :edit, :update]
 

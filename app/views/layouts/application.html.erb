@@ -21,7 +21,7 @@
           <a href="/" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Home</a>
           <% if user_signed_in? %>
             <% if current_user.confirmed? %>
-              <a href="/dashboard" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Dashboard</a>
+              <a href="<%= url_for(controller: 'dashboard', action: 'index') %>" class="text-white px-3 py-2 rounded-md hover:bg-red-700">Dashboard</a>
             <% else %>
               <span class="text-white px-3 py-2 rounded-md">Please confirm your account</span>
             <% end %>
