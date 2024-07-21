@@ -47,7 +47,7 @@ module Dashboard
     end
 
     def author_params
-      params.require(:author).permit(:full_name)
+      params.require(:author).permit(:full_name, :profile_picture)
     end
   end
 end
