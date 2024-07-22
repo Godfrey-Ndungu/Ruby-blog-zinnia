@@ -32,3 +32,4 @@ Welcome to the rewritten version of Django Blog Zinnia, now using Ruby on Rails!
 ##  Useful commands
 - generate admin:rails generate trestle:resource Article
 - rm tmp/pids/server.pid
+

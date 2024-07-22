@@ -1,0 +1,45 @@
+<!-- app/views/dashboard/profiles/index.html.erb -->
+<%= content_for :title, 'Profile' %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white shadow rounded-lg p-6">
+    <h1 class="text-2xl font-semibold mb-6">Profile</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- User Information -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4">User Information</h2>
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <p><strong>Email:</strong> <%= @user.email %></p>
+          <p><strong>Full Name:</strong> <%= @author.full_name %></p>
+          <p><strong>Active Status:</strong> <%= @author.is_active ? 'Active' : 'Inactive' %></p>
+        </div>
+      </div>
+      
+      <!-- Profile Picture -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Profile Picture</h2>
+        <div class="bg-gray-100 p-4 rounded-lg flex items-center justify-center">
+          <% if @author.profile_picture.attached? %>
+            <%= image_tag @author.profile_picture, class: "w-32 h-32 rounded-full" %>
+          <% else %>
+            <div class="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center text-white text-2xl font-bold">
+              <%= @user.email.split('@').first.split.map { |name| name[0] }.join.upcase %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles Written by the Profile -->
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Articles Written by <%= @author.full_name %></h2>
+      <div class="bg-gray-100 p-4 rounded-lg">
+        <% @author.articles.each do |article| %>
+          <div class="mb-4">
+            <h3 class="text-lg font-semibold"><%= link_to article.title, class: "text-blue-500 hover:underline" %></h3>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

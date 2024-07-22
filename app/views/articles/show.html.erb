@@ -94,26 +94,40 @@
   <%= render 'comments/form', article: @article %>
 </section>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a[data-method="delete"]').forEach((element) => {
-      element.addEventListener('click', (event) => {
-        event.preventDefault();
-        console.log('Delete link clicked');
-        // Manually send a delete request
-        fetch(element.href, {
+document.addEventListener('DOMContentLoaded', () => {
+  const deleteLinks = document.querySelectorAll('.delete-comment');
+
+  deleteLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      
+      const commentId = event.target.dataset.id;
+      const articleSlug = event.target.closest('[data-article-slug]').dataset.articleSlug;
+      
+      if (confirm('Are you sure you want to delete this comment?')) {
+        fetch(`/articles/${articleSlug}/comments/${commentId}`, {
           method: 'DELETE',
           headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json'
           }
         })
         .then(response => {
           if (response.ok) {
-            window.location.reload(); // Refresh to reflect changes
+            document.getElementById(`comment-${commentId}`).remove();
+          } else {
+            alert('Failed to delete the comment.');
           }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to delete the comment.');
         });
-      });
+      }
     });
   });
+});
+
   
 document.addEventListener("DOMContentLoaded", () => {
   window.toggleEditForm = (commentId) => {
