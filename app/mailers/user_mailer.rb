@@ -4,5 +4,6 @@ class UserMailer < ApplicationMailer
   def registration_token(user)
     @user = user
     mail(to: @user.email, subject: 'Registration Token')
+
   end
 end

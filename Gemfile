@@ -62,3 +62,5 @@ gem 'trestle'
 
 gem "tailwindcss-rails", "~> 2.5"
 gem 'aws-sdk-s3', '~> 1.114'
+gem 'sendgrid-ruby'
+gem 'trix'

@@ -205,6 +205,7 @@ GEM
     rexml (3.3.1)
       strscan
     rolify (6.0.1)
+    ruby_http_client (3.5.5)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -221,6 +222,8 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    sendgrid-ruby (6.7.0)
+      ruby_http_client (~> 3.4)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -247,6 +250,8 @@ GEM
       kaminari (>= 1.1.0)
       railties (>= 5.2.0)
       sprockets-rails (>= 2.0.0)
+    trix (0.10.1)
+      rails
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -293,11 +298,13 @@ DEPENDENCIES
   rolify
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
+  sendgrid-ruby
   simplecov
   spring
   sqlite3 (~> 1.4)
   tailwindcss-rails (~> 2.5)
   trestle
+  trix
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
