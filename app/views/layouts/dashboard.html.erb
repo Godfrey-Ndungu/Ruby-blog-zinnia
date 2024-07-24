@@ -59,21 +59,24 @@
 
     <div class="flex flex-col flex-1">
       <!-- Top Navigation Bar -->
+      <% if current_user.author %>
       <header class="bg-red-700 text-white flex items-end justify-end p-4">
         <div class="flex items-end space-x-4">
-          <% if current_user.author.profile_picture.attached? %>
-            <%= image_tag(current_user.author.profile_picture.url, alt: "Profile Picture", class: "w-12 h-12 rounded-full object-cover") %>
-          <% else %>
-            <div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-white font-bold text-lg">
-              <%= current_user.author.full_name[0] %>
-            </div>
-          <% end %>
+            <% if current_user.author.profile_picture.attached? %>
+              <%= image_tag(current_user.author.profile_picture.url, alt: "Profile Picture", class: "w-12 h-12 rounded-full object-cover") %>
+            <% else %>
+              <div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                <%= current_user.author.full_name[0] %>
+              </div>
+            <% end %>
           <div class="text-right bg-red-800 p-2 rounded-md">
             <h2 class="text-xl font-semibold"><%= current_user.author.full_name %></h2>
             <p class="text-xs"><%= current_user.email %></p>
           </div>
         </div>
       </header>
+      <% end %>
+
 
       <!-- Main Content Area -->
       <main class="flex-1 p-6 overflow-y-auto">

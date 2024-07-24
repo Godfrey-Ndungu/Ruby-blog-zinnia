@@ -24,10 +24,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ''
+  config.mailer_sender = Rails.application.credentials.sendgrid[:sender_email]
   config.sign_out_via = :get
   # Configure the class responsible to send e-mails.
-  config.mailer = 'CustomSendGridMailer'
+  config.mailer = 'Devise::Mailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
