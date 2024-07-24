@@ -15,42 +15,42 @@
 <body class="bg-gray-100 text-gray-900">
   <div class="flex h-screen">
     <!-- Left Navigation Bar -->
-    <aside class="w-1/6 bg-purple-700 text-white flex flex-col">
+    <aside class="w-1/6 bg-ruby-secondary-dark text-white flex flex-col">
       <nav class="flex-1 pt-32">
         <ul class="mt-6 space-y-4">
           <li>
-            <%= link_to dashboard_path, class: 'block py-4 px-8 rounded-md hover:bg-purple-800 flex items-center space-x-2 bg-purple-600' do %>
+            <%= link_to dashboard_path, class: 'block py-4 px-8 rounded-md hover:bg-ruby-background-primary flex items-center space-x-2 bg-ruby-background-secondary-light' do %>
               <i class="fas fa-tachometer-alt"></i>
               <span>Dashboard</span>
             <% end %>
           </li>
           <li>
-            <%= link_to dashboard_blogs_path, class: 'block py-4 px-8 rounded-md hover:bg-purple-800 flex items-center space-x-2 bg-purple-600' do %>
+            <%= link_to dashboard_blogs_path, class: 'block py-4 px-8 rounded-md hover:bg-ruby-background-primary flex items-center space-x-2 bg-ruby-background-secondary-light' do %>
               <i class="fas fa-file-alt"></i>
               <span>Articles</span>
             <% end %>
           </li>
           <li>
-            <%= link_to dashboard_authors_path, class: 'block py-4 px-8 rounded-md hover:bg-purple-800 flex items-center space-x-2 bg-purple-600' do %>
+            <%= link_to dashboard_authors_path, class: 'block py-4 px-8 rounded-md hover:bg-ruby-background-primary flex items-center space-x-2 bg-ruby-background-secondary-light' do %>
               <i class="fas fa-users"></i>
               <span>Authors</span>
             <% end %>
           </li>
           <li>
-            <%= link_to dashboard_categories_path, class: 'block py-4 px-8 rounded-md hover:bg-purple-800 flex items-center space-x-2 bg-purple-600' do %>
+            <%= link_to dashboard_categories_path, class: 'block py-4 px-8 rounded-md hover:bg-ruby-background-primary flex items-center space-x-2 bg-ruby-background-secondary-light' do %>
               <i class="fas fa-tags"></i>
               <span>Categories</span>
             <% end %>
           </li>
           <li>
-            <%= link_to dashboard_profiles_path, class: 'block py-4 px-8 rounded-md hover:bg-purple-800 flex items-center space-x-2 bg-purple-600' do %>
+            <%= link_to dashboard_profiles_path, class: 'block py-4 px-8 rounded-md hover:bg-ruby-background-primary flex items-center space-x-2 bg-ruby-background-secondary-light' do %>
               <i class="fas fa-tags"></i>
               <span>Profile</span>
             <% end %>
           </li>
         </ul>
       </nav>
-      <div class="bg-purple-800 p-4">
+      <div class=" p-4">
         <%= link_to destroy_user_session_path, method: :delete, class: 'block py-4 px-8 rounded-md bg-red-500 hover:bg-red-600 text-white' do %>
           Sign Out
         <% end %>
@@ -60,7 +60,7 @@
     <div class="flex flex-col flex-1">
       <!-- Top Navigation Bar -->
       <% if current_user.author %>
-      <header class="bg-red-700 text-white flex items-end justify-end p-4">
+      <header class="bg-ruby-background-secondary-light text-white flex items-end justify-end p-4">
         <div class="flex items-end space-x-4">
             <% if current_user.author.profile_picture.attached? %>
               <%= image_tag(current_user.author.profile_picture.url, alt: "Profile Picture", class: "w-12 h-12 rounded-full object-cover") %>
